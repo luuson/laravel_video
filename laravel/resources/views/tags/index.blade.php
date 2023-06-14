@@ -4,6 +4,12 @@
 <div class="container">
     <h1>Tags</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table class="table">
         <thead>
             <tr>
@@ -20,7 +26,7 @@
                     <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this tag?')">Delete</button>
                     </form>
                 </td>
             </tr>

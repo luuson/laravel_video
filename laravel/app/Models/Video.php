@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    use HasFactory;
+    protected $table = 'videos';
+
+    protected $fillable = ['title', 'description', 'path'];
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'video_tag', 'video_id', 'tag_id');
     }
 
     public function comments()

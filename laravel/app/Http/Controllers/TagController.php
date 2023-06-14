@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag as VideoTag;
+use App\Models\Tag as Tags;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -10,7 +10,7 @@ class TagController extends Controller
     public function index()
     {
         // Retrieve all tags
-        $tags = VideoTag::all();
+        $tags = Tags::all();
 
         // Return the view with the tags
         return view('tags.index', compact('tags'));
@@ -30,7 +30,9 @@ class TagController extends Controller
         ]);
 
         // Create a new tag
-        $tag = VideoTag::create($request->all());
+        $tag = Tags::create($request->all());
+        return redirect()->route('tags.index')->with('success', 'Record created successfully.');
+
 
         // Redirect to the index page or show success message
     }
@@ -41,7 +43,7 @@ class TagController extends Controller
         return view('tags.edit', compact('tag'));
     }
 
-    public function update(Request $request, VideoTag $tag)
+    public function update(Request $request, Tags $tag)
     {
         // Validate the request data
         $request->validate([
@@ -51,13 +53,15 @@ class TagController extends Controller
         // Update the tag
         $tag->update($request->all());
 
-        // Redirect to the index page or show success message
+        return redirect()->route('tags.index')->with('success', 'Record updated successfully.');
+
     }
 
     public function destroy(VideoTag $tag)
     {
         // Delete the tag
         $tag->delete();
+        return redirect()->route('tags.index')->with('success', 'Record deleted successfully.');
 
         // Redirect to the index page or show success message
     }
